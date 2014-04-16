@@ -17,15 +17,11 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.util;
+package de.thomas.pure_tetris.util;
 
-public class Tuple <A, B> {
-	public A x;
-	public B y;
-	
-	public Tuple(A x, B y) {
-		this.x = x;
-		this.y = y;
+public class Position extends Tuple<Integer, Integer> {
+	public Position(int x, int y) {
+		super(x, y);
 	}
 
 }

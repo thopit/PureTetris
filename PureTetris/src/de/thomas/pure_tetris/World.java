@@ -19,14 +19,21 @@
 
 package de.thomas.pure_tetris;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
 
-import de.thomas.tetris.pieces.*;
-import de.thomas.tetris.screens.GameOverScreen;
-import de.thomas.tetris.screens.GameScreen;
-import de.thomas.tetris.util.Position;
-import de.thomas.tetris.util.BackTuple;
+import de.thomas.pure_tetris.pieces.IPiece;
+import de.thomas.pure_tetris.pieces.JPiece;
+import de.thomas.pure_tetris.pieces.LPiece;
+import de.thomas.pure_tetris.pieces.OPiece;
+import de.thomas.pure_tetris.pieces.Piece;
+import de.thomas.pure_tetris.pieces.SPiece;
+import de.thomas.pure_tetris.pieces.TPiece;
+import de.thomas.pure_tetris.pieces.ZPiece;
+import de.thomas.pure_tetris.screens.GameOverScreen;
+import de.thomas.pure_tetris.screens.GameScreen;
+import de.thomas.pure_tetris.util.BackTuple;
+import de.thomas.pure_tetris.util.Position;
 
 /**
  * Contains and controls the state of the game

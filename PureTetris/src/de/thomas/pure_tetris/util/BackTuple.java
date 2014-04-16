@@ -17,7 +17,7 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.util;
+package de.thomas.pure_tetris.util;
 
 import de.thomas.pure_tetris.World.ColorType;
 

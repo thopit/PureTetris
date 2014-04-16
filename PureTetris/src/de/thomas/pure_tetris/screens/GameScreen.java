@@ -17,7 +17,7 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.screens;
+package de.thomas.pure_tetris.screens;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -39,7 +39,7 @@ import com.badlogic.gdx.math.Vector3;
 import de.thomas.pure_tetris.Tetris;
 import de.thomas.pure_tetris.World;
 import de.thomas.pure_tetris.World.ColorType;
-import de.thomas.tetris.util.Position;
+import de.thomas.pure_tetris.util.Position;
 
 /**
  * Screen that is shown, while playing the game

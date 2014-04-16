@@ -19,10 +19,10 @@
 
 package de.thomas.pure_tetris;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import de.thomas.tetris.screens.MainMenuScreen;
+import de.thomas.pure_tetris.screens.MainMenuScreen;
 
 public class Tetris extends Game {
 	public SpriteBatch batch;

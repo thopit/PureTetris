@@ -17,45 +17,44 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.screens;
+package de.thomas.pure_tetris.screens;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.Array;
 
 import de.thomas.pure_tetris.Tetris;
-import de.thomas.tetris.util.Score;
 
 /**
- * Screen that is shown, while viewing the highscore
+ * Screen that is shown while viewing the main-menu
  * @author Thomas Opitz
  *
  */
-public class HighScoreScreen implements Screen, InputProcessor {
+public class MainMenuScreen implements Screen, InputProcessor {
+	private final Tetris game;
 	private OrthographicCamera camera;
-	private Tetris game;
 	private BitmapFont font;
-	Array<Score> scores;
+	private BitmapFont authorFont;
+	private boolean startPossible;
 
 
-	public HighScoreScreen(final Tetris game) {
+	public MainMenuScreen(final Tetris game, boolean startPossible) {
+		this.game = game;
+
+		font = new BitmapFont(Gdx.files.internal("arialBold40.fnt"), false);
+		authorFont = new BitmapFont(Gdx.files.internal("arialBold32.fnt"), false);
+
+
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 480, 800);
-		this.game = game;
-		font = new BitmapFont(Gdx.files.internal("arialBold40.fnt"), false);
-
+		
 		Gdx.input.setInputProcessor(this);
 
-		FileHandle file = Gdx.files.local("scores.txt");
-
-		if (file.exists())
-			scores = GameOverScreen.readScores(file);
+		this.startPossible = startPossible;
 	}
 
 	@Override
@@ -67,18 +66,18 @@ public class HighScoreScreen implements Screen, InputProcessor {
 		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();
+		font.draw(game.batch, "Welcome to Tetris!", 50, 500);
+		
+		if (Gdx.app.getType().equals(ApplicationType.Android))
+			font.draw(game.batch, "Tap anywhere to begin", 25, 400);
+		else
+			font.draw(game.batch, "Press any key to begin", 25, 400);
 
-		font.draw(game.batch, "Highscores", 150, 780);
 
-		int y = 600;
-		for (Score s : scores) {
-			font.draw(game.batch, s.x + ": " + s.y, 100, y);
-			y -= 50;
 
-		}
+		authorFont.draw(game.batch, "(c) Thomas Opitz", 200, 40);
 
 		game.batch.end();
-
 	}
 
 	@Override
@@ -104,15 +103,20 @@ public class HighScoreScreen implements Screen, InputProcessor {
 	@Override
 	public void dispose() {
 		font.dispose();
+		authorFont.dispose();
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (! Gdx.app.getType().equals(ApplicationType.Android)) {
-			runGame();
-		}
+		if (! Gdx.app.getType().equals(ApplicationType.Android))
+			startGame();
 		
 		return true;
+	}
+	
+	private void startGame() {
+		game.setScreen(new GameScreen(game));
+		dispose();
 	}
 
 	@Override
@@ -127,13 +131,15 @@ public class HighScoreScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		runGame();
+		if (startPossible)
+			startGame();
 		return true;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
+		startPossible = true;
+		return true;
 	}
 
 	@Override
@@ -149,11 +155,6 @@ public class HighScoreScreen implements Screen, InputProcessor {
 	@Override
 	public boolean scrolled(int amount) {
 		return false;
-	}
-	
-	private void runGame() {
-		game.setScreen(new MainMenuScreen(game, false));
-		dispose();
 	}
 
 }

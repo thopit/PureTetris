@@ -17,12 +17,12 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.pieces;
+package de.thomas.pure_tetris.pieces;
 
 import com.badlogic.gdx.utils.Array;
 
 import de.thomas.pure_tetris.World.ColorType;
-import de.thomas.tetris.util.Position;
+import de.thomas.pure_tetris.util.Position;
 
 public class JPiece extends Piece {
 	Array<Position> firstPosition;

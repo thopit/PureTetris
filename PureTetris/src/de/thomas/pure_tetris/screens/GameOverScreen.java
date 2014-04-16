@@ -17,7 +17,7 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.screens;
+package de.thomas.pure_tetris.screens;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -32,7 +32,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.Array;
 
 import de.thomas.pure_tetris.Tetris;
-import de.thomas.tetris.util.Score;
+import de.thomas.pure_tetris.util.Score;
 
 /**
  * Screen that is shown, when the player has lost

@@ -17,11 +17,11 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.util;
+package de.thomas.pure_tetris.util;
 
-public class Position extends Tuple<Integer, Integer> {
-	public Position(int x, int y) {
+public class Score extends Tuple<String, Integer> {
+
+	public Score(String x, Integer y) {
 		super(x, y);
 	}
-
 }

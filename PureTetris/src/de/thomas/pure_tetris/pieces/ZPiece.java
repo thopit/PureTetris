@@ -17,51 +17,34 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.pieces;
+package de.thomas.pure_tetris.pieces;
 
 import com.badlogic.gdx.utils.Array;
 
 import de.thomas.pure_tetris.World.ColorType;
-import de.thomas.tetris.util.Position;
+import de.thomas.pure_tetris.util.Position;
 
-public class TPiece extends Piece {
+public class ZPiece extends Piece {
 	Array<Position> firstPosition;
 	Array<Position> secondPosition;
-	Array<Position> thirdPosition;
-	Array<Position> fourthPosition;
 	
-	public TPiece() {
+	public ZPiece() {
 		super();
-		rotationAmount = 4;
-		colorType = ColorType.T;
-		
+		rotationAmount = 2;
+		colorType = ColorType.Z;
 		firstPosition = new Array<Position>();
-		firstPosition.add(new Position(0, 0));
-		firstPosition.add(new Position(1, 0));
+		firstPosition.add(new Position(0, 1));
 		firstPosition.add(new Position(1, 1));
+		firstPosition.add(new Position(1, 0));
 		firstPosition.add(new Position(2, 0));
 		
 		secondPosition = new Array<Position>();
-		secondPosition.add(new Position(0, 2));
-		secondPosition.add(new Position(0, 1));
+		secondPosition.add(new Position(1, 2));
 		secondPosition.add(new Position(1, 1));
+		secondPosition.add(new Position(0, 1));
 		secondPosition.add(new Position(0, 0));
-		
-		thirdPosition = new Array<Position>();
-		thirdPosition.add(new Position(2, 1));
-		thirdPosition.add(new Position(1, 1));
-		thirdPosition.add(new Position(1, 0));
-		thirdPosition.add(new Position(0, 1));
-		
-		fourthPosition = new Array<Position>();
-		fourthPosition.add(new Position(1, 0));
-		fourthPosition.add(new Position(1, 1));
-		fourthPosition.add(new Position(0, 1));
-		fourthPosition.add(new Position(1, 2));
 		
 		rotations.add(firstPosition);
 		rotations.add(secondPosition);
-		rotations.add(thirdPosition);
-		rotations.add(fourthPosition);
 	}
 }

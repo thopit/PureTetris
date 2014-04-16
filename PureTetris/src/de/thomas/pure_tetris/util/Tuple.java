@@ -17,28 +17,15 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.pieces;
+package de.thomas.pure_tetris.util;
 
-import com.badlogic.gdx.utils.Array;
-
-import de.thomas.pure_tetris.World.ColorType;
-import de.thomas.tetris.util.Position;
-
-public class OPiece extends Piece {
-	Array<Position> firstPosition;
+public class Tuple <A, B> {
+	public A x;
+	public B y;
 	
-	public OPiece() {
-		super();
-		rotationAmount = 1;
-		colorType = ColorType.O;
-		
-		firstPosition = new Array<Position>();
-		firstPosition.add(new Position(0, 0));
-		firstPosition.add(new Position(1, 0));
-		firstPosition.add(new Position(0, 1));
-		firstPosition.add(new Position(1, 1));
-		
-		rotations.add(firstPosition);
+	public Tuple(A x, B y) {
+		this.x = x;
+		this.y = y;
 	}
 
 }

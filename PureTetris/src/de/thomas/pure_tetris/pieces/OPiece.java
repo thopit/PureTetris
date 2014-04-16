@@ -17,34 +17,28 @@
 //
 // *************************************************************************
 
-package de.thomas.tetris.pieces;
+package de.thomas.pure_tetris.pieces;
 
 import com.badlogic.gdx.utils.Array;
 
 import de.thomas.pure_tetris.World.ColorType;
-import de.thomas.tetris.util.Position;
+import de.thomas.pure_tetris.util.Position;
 
-public class ZPiece extends Piece {
+public class OPiece extends Piece {
 	Array<Position> firstPosition;
-	Array<Position> secondPosition;
 	
-	public ZPiece() {
+	public OPiece() {
 		super();
-		rotationAmount = 2;
-		colorType = ColorType.Z;
+		rotationAmount = 1;
+		colorType = ColorType.O;
+		
 		firstPosition = new Array<Position>();
+		firstPosition.add(new Position(0, 0));
+		firstPosition.add(new Position(1, 0));
 		firstPosition.add(new Position(0, 1));
 		firstPosition.add(new Position(1, 1));
-		firstPosition.add(new Position(1, 0));
-		firstPosition.add(new Position(2, 0));
-		
-		secondPosition = new Array<Position>();
-		secondPosition.add(new Position(1, 2));
-		secondPosition.add(new Position(1, 1));
-		secondPosition.add(new Position(0, 1));
-		secondPosition.add(new Position(0, 0));
 		
 		rotations.add(firstPosition);
-		rotations.add(secondPosition);
 	}
+
 }
