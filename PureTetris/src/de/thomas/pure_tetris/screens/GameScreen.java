@@ -63,6 +63,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 	private Texture boxT;
 	private Texture boxZ;
 	private Texture grid;
+	private Texture line;
 
 	private boolean showGrid;
 	private boolean paused;
@@ -78,7 +79,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 	public GameScreen(Tetris game) {
 		this.game = game;
 		world = new World(this, game);
-		showGrid = false;
+		showGrid = true;
 		paused = false;
 		movingFast = false;
 		moveTimer = 0;
@@ -112,6 +113,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 		boxT = new Texture(Gdx.files.internal("boxT.png"));
 		boxZ = new Texture(Gdx.files.internal("boxZ.png"));
 		grid = new Texture(Gdx.files.internal("grid.png"));
+		line = new Texture(Gdx.files.internal("line.png"));
 	}
 
 	private void initMap() {
@@ -138,6 +140,10 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 		if (showGrid)
 			game.batch.draw(grid, 0, 0);
 
+		
+		//game.batch.draw(line, 0, 4 * 48);
+		//game.batch.draw(line, 0, 13 * 48);
+		
 		drawCurrentPiece();
 		drawBackgroundPieces();
 
@@ -239,6 +245,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 		boxZ.dispose();
 		font.dispose();
 		grid.dispose();
+		line.dispose();
 
 		font.dispose();
 	}
@@ -317,7 +324,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 		int posX = world.screenToWorld(touchPos.x);
 		int posY = world.screenToWorld(touchPos.y);
 		
-		if (posY < 4 
+		if (posY < 3 
 				&& world.getCurrentPiece().getPos().y > 4 
 				&& world.getCurrentPiece().getPos().y < 14
 				&& ! world.currentPieceTouchCollision(x, posY, 2)
@@ -325,7 +332,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 			world.handleMoveDownFast();
 			movingFast = true;
 		}
-		else if (posY >= 4 && posY < 14) {
+		else if (posY >= 4 && posY < 13) {
 			if (posX < world.getCurrentPiece().getPos().x) {
 				world.handleMoveLeft();
 			}
@@ -333,7 +340,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 				world.handleMoveRight();
 			}
 		}
-		else if (posY >= 14){
+		else if (posY >= 13){
 			world.handleRotation();
 		}
 		
