@@ -63,7 +63,6 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 	private Texture boxT;
 	private Texture boxZ;
 	private Texture grid;
-	private Texture line;
 
 	private boolean showGrid;
 	private boolean paused;
@@ -113,7 +112,6 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 		boxT = new Texture(Gdx.files.internal("boxT.png"));
 		boxZ = new Texture(Gdx.files.internal("boxZ.png"));
 		grid = new Texture(Gdx.files.internal("grid.png"));
-		line = new Texture(Gdx.files.internal("line.png"));
 	}
 
 	private void initMap() {
@@ -245,7 +243,6 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 		boxZ.dispose();
 		font.dispose();
 		grid.dispose();
-		line.dispose();
 
 		font.dispose();
 	}
