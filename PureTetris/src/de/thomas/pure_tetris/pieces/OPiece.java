@@ -25,12 +25,12 @@ import de.thomas.pure_tetris.World.ColorType;
 import de.thomas.pure_tetris.util.Position;
 
 public class OPiece extends Piece {
-	Array<Position> firstPosition;
-	
 	public OPiece() {
 		super();
 		rotationAmount = 1;
 		colorType = ColorType.O;
+		
+		Array<Position> firstPosition;
 		
 		firstPosition = new Array<Position>();
 		firstPosition.add(new Position(0, 0));

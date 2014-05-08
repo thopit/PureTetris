@@ -25,15 +25,15 @@ import de.thomas.pure_tetris.World.ColorType;
 import de.thomas.pure_tetris.util.Position;
 
 public class TPiece extends Piece {
-	Array<Position> firstPosition;
-	Array<Position> secondPosition;
-	Array<Position> thirdPosition;
-	Array<Position> fourthPosition;
-	
 	public TPiece() {
 		super();
 		rotationAmount = 4;
 		colorType = ColorType.T;
+		
+		Array<Position> firstPosition;
+		Array<Position> secondPosition;
+		Array<Position> thirdPosition;
+		Array<Position> fourthPosition;
 		
 		firstPosition = new Array<Position>();
 		firstPosition.add(new Position(0, 0));

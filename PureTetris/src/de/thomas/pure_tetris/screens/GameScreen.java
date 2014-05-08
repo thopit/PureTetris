@@ -137,10 +137,6 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 
 		if (showGrid)
 			game.batch.draw(grid, 0, 0);
-
-		
-		//game.batch.draw(line, 0, 4 * 48);
-		//game.batch.draw(line, 0, 13 * 48);
 		
 		drawCurrentPiece();
 		drawBackgroundPieces();

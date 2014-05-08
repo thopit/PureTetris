@@ -25,13 +25,14 @@ import de.thomas.pure_tetris.World.ColorType;
 import de.thomas.pure_tetris.util.Position;
 
 public class SPiece extends Piece {
-	Array<Position> firstPosition;
-	Array<Position> secondPosition;
-	
 	public SPiece() {
 		super();
 		rotationAmount = 2;
 		colorType = ColorType.S;
+		
+		Array<Position> firstPosition;
+		Array<Position> secondPosition;
+		
 		firstPosition = new Array<Position>();
 		firstPosition.add(new Position(0, 0));
 		firstPosition.add(new Position(1, 0));
