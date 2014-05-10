@@ -26,6 +26,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import de.thomas.pure_tetris.Tetris;
 
@@ -40,10 +41,13 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private BitmapFont font;
 	private BitmapFont authorFont;
 	private boolean startPossible;
+	ShapeRenderer shapeRenderer;
 
 
 	public MainMenuScreen(final Tetris game, boolean startPossible) {
 		this.game = game;
+		
+		
 
 		font = new BitmapFont(Gdx.files.internal("arialBold40.fnt"), false);
 		authorFont = new BitmapFont(Gdx.files.internal("arialBold32.fnt"), false);
@@ -55,6 +59,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		Gdx.input.setInputProcessor(this);
 
 		this.startPossible = startPossible;
+		
+		shapeRenderer = new ShapeRenderer();
 	}
 
 	@Override
@@ -64,14 +70,57 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 		camera.update();
 		game.batch.setProjectionMatrix(camera.combined);
+		
+		
+		/*
+		int distance = 10;
+		
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.box(480 / 2 - font.getBounds(play).width / 2 - 10, 500 - font.getBounds(play).height - 10, 0, 
+				font.getBounds(play).width + 20, font.getBounds(play).height + 20, 0);
+		shapeRenderer.end();
+		
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.box(480 / 2 - font.getBounds(options).width / 2 - 10, 400, 0, 
+				font.getBounds(options).width + 20, font.getBounds(options).height + 20, 0);
+		shapeRenderer.end();
+		
+		shapeRenderer.begin(ShapeType.Line);
+		shapeRenderer.box(480 / 2 - font.getBounds(highscore).width / 2 - 10, 300, 0, 
+				font.getBounds(highscore).width + 20, font.getBounds(highscore).height + 20, 0);
+		shapeRenderer.end();
+		*/
+		
 
 		game.batch.begin();
-		font.draw(game.batch, "Welcome to Tetris!", 50, 500);
 		
-		if (Gdx.app.getType().equals(ApplicationType.Android))
-			font.draw(game.batch, "Tap anywhere to begin", 25, 400);
-		else
-			font.draw(game.batch, "Press any key to begin", 25, 400);
+		
+		
+		
+		
+		String pureTetris = "PureTetris";
+		font.draw(game.batch, pureTetris, 480 / 2 - font.getBounds(pureTetris).width / 2, 750);
+		
+		String play = "Play";
+		font.draw(game.batch, play, 480 / 2 - font.getBounds(play).width / 2, 550);
+		String options = "Options";
+		font.draw(game.batch, options, 480 / 2 - font.getBounds(options).width / 2, 450);
+		String highscore = "Highscore";
+		font.draw(game.batch, highscore, 480 / 2 - font.getBounds(highscore).width / 2, 350);
+		
+		/*
+		String welcome = "Welcome to Tetris!";
+		font.draw(game.batch, welcome, 480 / 2 - font.getBounds(welcome).width / 2, 500);
+		
+		if (Gdx.app.getType().equals(ApplicationType.Android)) {
+			String message = "Tap anywhere to begin";
+			font.draw(game.batch, message, 480 / 2 - font.getBounds(message).width / 2, 400);
+		}
+		else {
+			String message = "Press any key to begin";
+			font.draw(game.batch, message, 480 / 2 - font.getBounds(message).width / 2, 400);
+		}
+		*/
 
 
 

@@ -143,7 +143,9 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 
 
 		font.draw(game.batch,  "Level: " + world.getLevel(), 10, 795);
-		font.draw(game.batch, "Score: " + world.getScore(), 235, 795);
+		
+		String score = "Score: " + world.getScore();
+		font.draw(game.batch, score, 480 - font.getBounds(score).width - 10, 795);
 
 		game.batch.end();
 

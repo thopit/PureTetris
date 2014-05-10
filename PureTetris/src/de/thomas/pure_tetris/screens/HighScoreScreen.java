@@ -67,12 +67,14 @@ public class HighScoreScreen implements Screen, InputProcessor {
 		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();
-
-		font.draw(game.batch, "Highscores", 150, 780);
+		
+		String highscores = "Highscores";
+		font.draw(game.batch, highscores, 480 / 2 - font.getBounds(highscores).width / 2, 780);
 
 		int y = 600;
 		for (Score s : scores) {
-			font.draw(game.batch, s.x + ": " + s.y, 100, y);
+			String singleScore = s.x + ": " + s.y;
+			font.draw(game.batch, singleScore, 480 / 2 - font.getBounds(singleScore).width / 2, y);
 			y -= 50;
 
 		}

@@ -84,8 +84,11 @@ public class GameOverScreen implements Screen, TextInputListener {
 		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();
-		font.draw(game.batch, "Game Over!", 120, 550);
-		font.draw(game.batch, "Your score is " + score, 80, 450);
+		String gameOver = "Game Over!";
+		font.draw(game.batch, gameOver, 480 / 2 - font.getBounds(gameOver).width / 2, 550);
+		
+		String scoreStr =  "Your score is " + score;
+		font.draw(game.batch, scoreStr, 480 / 2 - font.getBounds(scoreStr).width / 2, 450);
 
 		game.batch.end();
 
