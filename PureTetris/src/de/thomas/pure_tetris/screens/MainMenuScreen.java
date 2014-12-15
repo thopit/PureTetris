@@ -25,6 +25,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import de.thomas.pure_tetris.Tetris;
@@ -39,6 +40,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private OrthographicCamera camera;
 	private BitmapFont font;
 	private BitmapFont authorFont;
+	private Texture chooser;
 	private boolean startPossible;
 
 	public MainMenuScreen(final Tetris game, boolean startPossible) {
@@ -46,7 +48,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 		font = new BitmapFont(Gdx.files.internal("arialBold40.fnt"), false);
 		authorFont = new BitmapFont(Gdx.files.internal("arialBold32.fnt"), false);
-
+		
+		chooser = new Texture(Gdx.files.internal("chooser.png"));
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 480, 800);
@@ -66,6 +69,8 @@ public class MainMenuScreen implements Screen, InputProcessor {
 		
 
 		game.batch.begin();
+		
+		game.batch.draw(chooser, 100, 100);
 		
 		String pureTetris = "PureTetris";
 		font.draw(game.batch, pureTetris, 480 / 2 - font.getBounds(pureTetris).width / 2, 750);
