@@ -19,13 +19,14 @@
 
 package de.thomas.pure_tetris.screens;
 
-import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import de.thomas.pure_tetris.Tetris;
@@ -40,23 +41,22 @@ public class MainMenuScreen implements Screen, InputProcessor {
 	private OrthographicCamera camera;
 	private BitmapFont font;
 	private BitmapFont authorFont;
-	private Texture chooser;
 	private boolean startPossible;
+	private int menuPosition = 0;
 
-	public MainMenuScreen(final Tetris game, boolean startPossible) {
+	public MainMenuScreen(final Tetris game, boolean startPossible, int menuPosition) {
 		this.game = game;
 
 		font = new BitmapFont(Gdx.files.internal("arialBold40.fnt"), false);
 		authorFont = new BitmapFont(Gdx.files.internal("arialBold32.fnt"), false);
 		
-		chooser = new Texture(Gdx.files.internal("chooser.png"));
-
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 480, 800);
 		
 		Gdx.input.setInputProcessor(this);
 
 		this.startPossible = startPossible;
+		this.menuPosition = menuPosition;
 	}
 
 	@Override
@@ -70,15 +70,32 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 		game.batch.begin();
 		
-		game.batch.draw(chooser, 100, 100);
+		font.setColor(Color.WHITE);
 		
 		String pureTetris = "PureTetris";
 		font.draw(game.batch, pureTetris, 480 / 2 - font.getBounds(pureTetris).width / 2, 750);
 		
+		if (menuPosition == 0)
+			font.setColor(14, 59, 240, 1);
+		else
+			font.setColor(Color.WHITE);
+		
 		String play = "Play";
 		font.draw(game.batch, play, 480 / 2 - font.getBounds(play).width / 2, 550);
+		
+		if (menuPosition == 1)
+			font.setColor(14, 59, 240, 1);
+		else
+			font.setColor(Color.WHITE);
+		
 		String options = "Options";
 		font.draw(game.batch, options, 480 / 2 - font.getBounds(options).width / 2, 450);
+		
+		if (menuPosition == 2)
+			font.setColor(14, 59, 240, 1);
+		else
+			font.setColor(Color.WHITE);
+		
 		String highscore = "Highscore";
 		font.draw(game.batch, highscore, 480 / 2 - font.getBounds(highscore).width / 2, 350);
 		
@@ -115,14 +132,35 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (! Gdx.app.getType().equals(ApplicationType.Android))
-			startGame();
+		if (keycode == Input.Keys.UP)
+			menuPosition = (menuPosition + 2) % 3;
+		if (keycode == Input.Keys.DOWN)
+			menuPosition = (menuPosition + 1) % 3;
+		
+		if (keycode == Input.Keys.ENTER) {
+			if (menuPosition == 0)
+				startGame();
+			else if (menuPosition == 1)
+				startOptions();
+			else if (menuPosition == 2)
+				startHighScore();
+		}
 		
 		return true;
 	}
 	
 	private void startGame() {
 		game.setScreen(new GameScreen(game));
+		dispose();
+	}
+	
+	private void startOptions() {
+		game.setScreen(new OptionsScreen(game));
+		dispose();
+	}
+	
+	private void startHighScore() {
+		game.setScreen(new HighScoreScreen(game, true));
 		dispose();
 	}
 
@@ -138,7 +176,7 @@ public class MainMenuScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if (startPossible)
+		if (Gdx.app.getType().equals(ApplicationType.Android) && startPossible)
 			startGame();
 		return true;
 	}

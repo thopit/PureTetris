@@ -72,10 +72,15 @@ public class World {
 	boolean testMode = false;
 	boolean debug = false;
 
-	public World(final GameScreen screen, final Tetris game) {
+	public World(final GameScreen screen, final Tetris game, int startLevel) {
 		moveTime = 0;
 		actionTime = 0;
 		moveTimeFix = 0.7f;
+		
+		if (startLevel != 1) {
+			moveTimeFix *= Math.pow(0.84, startLevel - 1);
+		}
+		
 		moveTimeSave = moveTimeFix;
 		actionTimeFix = 0.1f;
 		backGround = new BackTuple[10][17];
@@ -84,14 +89,21 @@ public class World {
 		rightReleased = true;
 		upReleased = true;
 		downReleased = true;
-		level = 1;
+		level = Options.startLevel;
 		score = 0;
 		downFastPossible = true;
+		
 		if (testMode)
 			scoreToNextLevel = 1;
 		else 
 			scoreToNextLevel = 150;
 		
+		if (startLevel != 1) {
+			if (testMode)
+				scoreToNextLevel += (startLevel - 1);
+			else
+				scoreToNextLevel += 150 * (startLevel - 1);
+		}
 		
 		if (Gdx.app.getType().equals(ApplicationType.Android))
 			FAST_MOVE_TIME = 0.06f;

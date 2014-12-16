@@ -36,6 +36,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import de.thomas.pure_tetris.Options;
 import de.thomas.pure_tetris.Tetris;
 import de.thomas.pure_tetris.World;
 import de.thomas.pure_tetris.World.ColorType;
@@ -64,7 +65,6 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 	private Texture boxZ;
 	private Texture grid;
 
-	private boolean showGrid;
 	private boolean paused;
 	
 	private boolean movingFast;
@@ -77,8 +77,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 
 	public GameScreen(Tetris game) {
 		this.game = game;
-		world = new World(this, game);
-		showGrid = true;
+		world = new World(this, game, Options.startLevel);
 		paused = false;
 		movingFast = false;
 		moveTimer = 0;
@@ -135,7 +134,7 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
 
-		if (showGrid)
+		if (Options.showGrid)
 			game.batch.draw(grid, 0, 0);
 		
 		drawCurrentPiece();
@@ -247,6 +246,10 @@ public class GameScreen implements Screen, InputProcessor, GestureListener {
 
 	@Override
 	public boolean keyDown(int keycode) {
+		if (keycode == Input.Keys.ESCAPE) {
+
+		}
+		
 		if (keycode == Input.Keys.UP && world.isUpReleased() && ! paused) {
 			world.handleRotation();
 		}

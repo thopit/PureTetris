@@ -21,43 +21,36 @@ package de.thomas.pure_tetris.screens;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.utils.Array;
 
+import de.thomas.pure_tetris.Options;
 import de.thomas.pure_tetris.Tetris;
-import de.thomas.pure_tetris.util.Score;
 
 /**
  * Screen that is shown, while viewing the highscore
  * @author Thomas Opitz
  *
  */
-public class HighScoreScreen implements Screen, InputProcessor {
+public class OptionsScreen implements Screen, InputProcessor {
 	private OrthographicCamera camera;
 	private Tetris game;
-	private boolean manuallyChosen;
 	private BitmapFont font;
-	Array<Score> scores;
+	private int menuPosition = 0;
 
-
-	public HighScoreScreen(final Tetris game, final boolean manuallyChosen) {
+	public OptionsScreen(final Tetris game) {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 480, 800);
 		this.game = game;
-		this.manuallyChosen = manuallyChosen;
 		font = new BitmapFont(Gdx.files.internal("arialBold40.fnt"), false);
 
 		Gdx.input.setInputProcessor(this);
-
-		FileHandle file = Gdx.files.local("scores.txt");
-
-		if (file.exists())
-			scores = GameOverScreen.readScores(file);
 	}
 
 	@Override
@@ -69,17 +62,36 @@ public class HighScoreScreen implements Screen, InputProcessor {
 		game.batch.setProjectionMatrix(camera.combined);
 
 		game.batch.begin();
-		
-		String highscores = "Highscores";
-		font.draw(game.batch, highscores, 480 / 2 - font.getBounds(highscores).width / 2, 780);
 
-		int y = 600;
-		for (Score s : scores) {
-			String singleScore = s.x + ": " + s.y;
-			font.draw(game.batch, singleScore, 480 / 2 - font.getBounds(singleScore).width / 2, y);
-			y -= 50;
+		font.setColor(Color.WHITE);
 
-		}
+		String options = "Options";
+		font.draw(game.batch, options, 480 / 2 - font.getBounds(options).width / 2, 780);
+
+		if (menuPosition == 0)
+			font.setColor(14, 59, 240, 1);
+		else
+			font.setColor(Color.WHITE);
+
+		String sG = "Show Grid";
+		font.draw(game.batch, sG, 80, 550);
+
+		font.setColor(Color.WHITE);
+		if (Options.showGrid)
+			font.draw(game.batch, "Yes", 80 + font.getBounds(sG).width + 30, 550);
+		else
+			font.draw(game.batch, "No", 80 + font.getBounds(sG).width + 30, 550);
+
+		if (menuPosition == 1)
+			font.setColor(14, 59, 240, 1);
+		else
+			font.setColor(Color.WHITE);
+
+		String sL = "Start Level";
+		font.draw(game.batch, sL, 80, 450);
+
+		font.setColor(Color.WHITE);
+		font.draw(game.batch, String.valueOf(Options.startLevel), 80 + font.getBounds(sL).width + 30, 450);
 
 		game.batch.end();
 
@@ -112,10 +124,38 @@ public class HighScoreScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if (! Gdx.app.getType().equals(ApplicationType.Android)) {
+		if (keycode == Input.Keys.UP)
+			menuPosition = (menuPosition + 3) % 2;
+		if (keycode == Input.Keys.DOWN)
+			menuPosition = (menuPosition + 1) % 2;
+
+		if (menuPosition == 0 && (keycode == Input.Keys.LEFT || keycode == Input.Keys.RIGHT || keycode == Input.Keys.ENTER))
+			swapGrid();
+
+		if (menuPosition == 1) {
+			if (keycode == Input.Keys.LEFT) {
+				int startLevel = (Options.startLevel + 10) % 11;
+
+				if (startLevel == 0)
+					startLevel = 10;
+
+				Options.startLevel = startLevel;
+			}
+			else if (keycode == Input.Keys.RIGHT || keycode == Input.Keys.ENTER) {
+				int startLevel = (Options.startLevel + 1) % 11;
+
+				if (startLevel == 0)
+					startLevel = 1;
+
+				Options.startLevel = startLevel;
+			}
+		}
+
+		if (keycode == Input.Keys.ESCAPE) {
+			saveOptions();
 			startMainMenu();
 		}
-		
+
 		return true;
 	}
 
@@ -131,7 +171,11 @@ public class HighScoreScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		startMainMenu();
+		if (Gdx.app.getType().equals(ApplicationType.Android)) {
+			saveOptions();
+			startMainMenu();
+		}
+
 		return true;
 	}
 
@@ -154,14 +198,25 @@ public class HighScoreScreen implements Screen, InputProcessor {
 	public boolean scrolled(int amount) {
 		return false;
 	}
-	
+
 	private void startMainMenu() {
-		if (manuallyChosen)
-			game.setScreen(new MainMenuScreen(game, false, 2));
-		else
-			game.setScreen(new MainMenuScreen(game, false, 0));
-			
+		game.setScreen(new MainMenuScreen(game, false, 1));
 		dispose();
+	}
+	
+	private void saveOptions() {
+		FileHandle file = Gdx.files.local("options.txt");
+		
+		if (file.exists()) {
+			file.writeString(Options.showGrid + String.format("%n") + Options.startLevel, false);
+		}
+	}
+
+	private void swapGrid() {
+		if (Options.showGrid)
+			Options.showGrid = false;
+		else
+			Options.showGrid = true;
 	}
 
 }

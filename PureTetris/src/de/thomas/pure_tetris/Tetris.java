@@ -19,7 +19,11 @@
 
 package de.thomas.pure_tetris;
 
+import java.util.Scanner;
+
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.thomas.pure_tetris.screens.MainMenuScreen;
@@ -30,7 +34,8 @@ public class Tetris extends Game {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		this.setScreen(new MainMenuScreen(this, true));
+		this.setScreen(new MainMenuScreen(this, true, 0));
+		readOptions();
 	}
 	
 	public void render() {
@@ -41,4 +46,34 @@ public class Tetris extends Game {
 		batch.dispose();
 	}
 	
+	private void readOptions() {
+		FileHandle file = Gdx.files.local("options.txt");
+		
+		if (file.exists()) {
+			String input = file.readString();
+			
+			Scanner scanner = new Scanner(input);
+			
+			String showGridStr = "";
+			String levelStr = "";
+			
+			if (scanner.hasNext()) {
+				showGridStr = scanner.next();
+			}
+			if (scanner.hasNext()) {
+				levelStr = scanner.next();
+			}
+			
+			if (! showGridStr.equals("") && ! levelStr.equals("")) {
+				if (showGridStr.equals("true"))
+					Options.showGrid = true;
+				else
+					Options.showGrid = false;
+				
+				Options.startLevel = Integer.parseInt(levelStr);
+			}
+			
+			scanner.close();
+		}
+	}
 }

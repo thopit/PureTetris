@@ -100,7 +100,7 @@ public class GameOverScreen implements Screen, TextInputListener {
 				askForText = true;
 			}
 			else if (score <= 0 || notGoodEnough) {
-				game.setScreen(new HighScoreScreen(game));
+				game.setScreen(new HighScoreScreen(game, false));
 				dispose();
 			}
 		}
@@ -175,7 +175,7 @@ public class GameOverScreen implements Screen, TextInputListener {
 			file.writeString(text + " " + score + "\n", true);
 		}
 
-		game.setScreen(new HighScoreScreen(game));
+		game.setScreen(new HighScoreScreen(game, false));
 		dispose();
 	}
 
@@ -207,7 +207,7 @@ public class GameOverScreen implements Screen, TextInputListener {
 
 	@Override
 	public void canceled() {
-		game.setScreen(new HighScoreScreen(game));
+		game.setScreen(new HighScoreScreen(game, false));
 		dispose();
 	}
 
