@@ -151,7 +151,7 @@ public class OptionsScreen implements Screen, InputProcessor {
 			}
 		}
 
-		if (keycode == Input.Keys.ESCAPE) {
+		if (keycode == Input.Keys.ESCAPE || keycode == Input.Keys.BACKSPACE) {
 			saveOptions();
 			startMainMenu();
 		}
