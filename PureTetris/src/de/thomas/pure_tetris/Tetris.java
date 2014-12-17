@@ -65,12 +65,8 @@ public class Tetris extends Game {
 			}
 			
 			if (! showGridStr.equals("") && ! levelStr.equals("")) {
-				if (showGridStr.equals("true"))
-					Options.showGrid = true;
-				else
-					Options.showGrid = false;
-				
 				Options.startLevel = Integer.parseInt(levelStr);
+				Options.showGrid = Boolean.parseBoolean(showGridStr);
 			}
 			
 			scanner.close();
